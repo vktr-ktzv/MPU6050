@@ -116,10 +116,12 @@ int main(void)
     if(MPU6050_DataReady() == 1)
 		{
 			MPU6050_ProcessData(&MPU6050);
-			//printf("%f, %f, %f\n", MPU6050.acc_x, MPU6050.acc_y, MPU6050.acc_z);
-			//printf("%f, %f, %f\n", MPU6050.gyro_x, MPU6050.gyro_y, MPU6050.gyro_z);
-			printf("%d, %d, %d\n", MPU6050.acc_x_raw, MPU6050.acc_y_raw, MPU6050.acc_z_raw);
+			printf("MPU6050.acc_x: %f, MPU6050.acc_y: %f, MPU6050.acc_z: %f\n", MPU6050.acc_x, MPU6050.acc_y, MPU6050.acc_z);
+			printf("MPU6050.gyro_x: %f, MPU6050.gyro_y: %f, MPU6050.gyro_z: %f\n", MPU6050.gyro_x, MPU6050.gyro_y, MPU6050.gyro_z);
+			printf("MPU6050.acc_x_raw: %d, MPU6050.acc_y_raw: %d, MPU6050.acc_z_raw: %d\n\n\n", MPU6050.acc_x_raw, MPU6050.acc_y_raw, MPU6050.acc_z_raw);
 		}
+
+    HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
