@@ -4,8 +4,9 @@
 
 Struct_MPU6050 MPU6050;
 
-static float LSB_Sensitivity_ACC;
-static float LSB_Sensitivity_GYRO;
+
+ 
+
 
 void MPU6050_Writebyte(uint8_t reg_addr, uint8_t val)
 {
@@ -91,7 +92,7 @@ void MPU6050_Initialization(void)
 	HAL_Delay(50);
 
 	MPU6050_Get_LSB_Sensitivity(FS_SCALE_GYRO, FS_SCALE_ACC);
-	printf("LSB_Sensitivity_GYRO: %f, LSB_Sensitivity_ACC: %f\n",LSB_Sensitivity_GYRO, LSB_Sensitivity_ACC);
+	//printf("LSB_Sensitivity_GYRO: %lf, LSB_Sensitivity_ACC: %lf\n",LSB_Sensitivity_GYRO, LSB_Sensitivity_ACC);
 
 	//Interrupt PIN setting
 	uint8_t INT_LEVEL = 0x0; //0 - active high, 1 - active low
@@ -126,6 +127,7 @@ void MPU6050_Get6AxisRawData(Struct_MPU6050* mpu6050)
 
 void MPU6050_Get_LSB_Sensitivity(uint8_t FS_SCALE_GYRO, uint8_t FS_SCALE_ACC)
 {
+	
 	switch(FS_SCALE_GYRO)
 	{
 	case 0:

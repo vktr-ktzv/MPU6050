@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "i2c.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -40,6 +41,7 @@ int _write(int file, uint8_t* p, int len)
 	}
 	return 0;
 }
+
 
 /* USER CODE END PTD */
 
@@ -67,6 +69,15 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{     
+      //HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET); 
+      MPU6050_ProcessData(&MPU6050);
+      printf("acc_x_raw: %d, acc_y_raw: %d, acc_z_raw: %d, gyro_x_raw: %d, gyro_y_raw: %d, gyro_z_raw: %d \n\r", MPU6050.acc_x_raw, MPU6050.acc_y_raw, MPU6050.acc_z_raw,MPU6050.gyro_x_raw, MPU6050.gyro_y_raw, MPU6050.gyro_z_raw );
+      
+}
+
 
 /* USER CODE END 0 */
 
@@ -100,10 +111,12 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_USART2_UART_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-
   MPU6050_Initialization();
 
+  HAL_TIM_Base_Start_IT(&htim1);
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,15 +126,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    if(MPU6050_DataReady() == 1)
-		{
-			MPU6050_ProcessData(&MPU6050);
-			printf("MPU6050.acc_x: %f, MPU6050.acc_y: %f, MPU6050.acc_z: %f\n", MPU6050.acc_x, MPU6050.acc_y, MPU6050.acc_z);
-			printf("MPU6050.gyro_x: %f, MPU6050.gyro_y: %f, MPU6050.gyro_z: %f\n", MPU6050.gyro_x, MPU6050.gyro_y, MPU6050.gyro_z);
-			printf("MPU6050.acc_x_raw: %d, MPU6050.acc_y_raw: %d, MPU6050.acc_z_raw: %d\n\n\n", MPU6050.acc_x_raw, MPU6050.acc_y_raw, MPU6050.acc_z_raw);
-		}
-
-    HAL_Delay(100);
+  
   }
   /* USER CODE END 3 */
 }

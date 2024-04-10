@@ -21,6 +21,8 @@
 #define MPU6050_INT_PORT 	GPIOB
 #define MPU6050_INT_PIN 	GPIO_PIN_5
 
+static float LSB_Sensitivity_ACC;
+static float LSB_Sensitivity_GYRO;
 
 typedef struct _MPU6050{
 	short acc_x_raw;
